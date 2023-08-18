@@ -1,9 +1,12 @@
 const { Contact, schemas } = require("../../models/contact");
 
-const updateContact = async (req, res, next) => {
+const updateStatusContact = async (req, res, next) => {
   try {
-    const { error } = schemas.addSchema.validate(req.body);
+    const { error } = schemas.updateFavoriteSchema.validate(req.body);
     if (error) {
+      if (error.details[0].message === '"favorite" is required') {
+        error.message = "missing field favorite";
+      }
       error.status = 400;
       throw error;
     }
@@ -14,7 +17,7 @@ const updateContact = async (req, res, next) => {
       new: true,
     });
     if (!result) {
-      const error = new Error("Not found contact");
+      const error = new Error("Not found");
       error.status = 404;
       throw error;
     }
@@ -24,4 +27,4 @@ const updateContact = async (req, res, next) => {
   }
 };
 
-module.exports = updateContact;
+module.exports = updateStatusContact;
