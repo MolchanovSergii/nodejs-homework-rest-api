@@ -40,9 +40,19 @@ const loginSchema = Joi.object({
   token: Joi.string(),
 });
 
+const updateSubscribeSchema = Joi.object({
+  subscription: Joi.string()
+    .valid(...roleList)
+    .required()
+    .messages({
+      "any.only":
+        "Subscription must be one of the following: starter, pro, business",
+    }),
+});
+
 userSchema.post("save", handlerSchemaValidationErrors);
 
-const schemas = { registerSchema, loginSchema };
+const schemas = { registerSchema, loginSchema, updateSubscribeSchema };
 
 const User = model("user", userSchema);
 
