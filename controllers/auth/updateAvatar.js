@@ -15,7 +15,7 @@ const avatarsDirectory = path.join(
 
 const updateAvatar = async (req, res) => {
   if (!req.file) {
-    throw httpError(400, "Bad request");
+    throw httpError(400, "Bad request - file not uploaded");
   }
 
   const { _id } = req.user;
